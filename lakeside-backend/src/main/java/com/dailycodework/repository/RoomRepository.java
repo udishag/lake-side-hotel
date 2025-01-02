@@ -1,4 +1,7 @@
 package com.dailycodework.repository;
 
-public interface RoomRepository {
+import com.dailycodework.model.Room;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RoomRepository extends JpaRepository<Room, Long> {
 }
