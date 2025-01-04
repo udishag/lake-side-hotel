@@ -1,5 +1,6 @@
 package com.dailycodework.model;
 
+import com.dailycodework.model.BookedRoom;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,11 +16,10 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-
 public class Room {
     @Id
-    @GeneratedValue(strategy  = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  Long id;
     private String roomType;
     private BigDecimal roomPrice;
     private boolean isBooked = false;
@@ -27,24 +27,20 @@ public class Room {
     @Lob
     private Blob photo;
 
-
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BookedRoom> bookings;
 
-    public Room(){
+    public Room() {
         this.bookings = new ArrayList<>();
     }
-
     public void addBooking(BookedRoom booking){
-        if(bookings ==  null){
+        if (bookings == null){
             bookings = new ArrayList<>();
         }
-
         bookings.add(booking);
         booking.setRoom(this);
         isBooked = true;
         String bookingCode = RandomStringUtils.randomNumeric(10);
         booking.setBookingConfirmationCode(bookingCode);
     }
-
 }
